@@ -4,8 +4,7 @@ export const _handleChange = ({name, value, checked}, previousState, setState = 
     ...previousState,
     [name]: value
   }
-  if(setState)
-    setState(newState)
+  setState(newState)
 }
 
 export const transformResponseToNeededData = (response) => {
@@ -31,7 +30,6 @@ export const transformResponseToNeededData = (response) => {
 
     result.data.push(sample)
   });
-  console.log(result)
   return result
 }
 
