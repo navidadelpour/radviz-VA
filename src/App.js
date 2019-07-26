@@ -1,25 +1,53 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, {useEffect, useState} from 'react';
+import updateRadviz from './Utils/updateRadviz'
+import fetchData from './Utils/fetchData'
+import FormWrapper from './Components/Forms/FormWrapper'
 
-function App() {
+const API_URL = 'http://localhost:5000/'
+
+const defaultMainConfig = {
+  datasetName: "None",
+  cluster: "None",
+  numClusters: 7
+}
+
+const defaultDataset = {
+  data: [],
+  dimensions: [],
+  classLabel: "",
+  clusterLabel: ""
+}
+
+const defaultRadvizConfig = {
+  useRepulsion: true,
+  drawLinks: true,
+  dotSize: 5,
+  width: 500,
+  isClusterColorset: false
+}
+
+const App = () => {
+  const [mainConfig, setMainConfig] = useState(defaultMainConfig)
+  const [radvizConfig, setRadvizConfig] = useState(defaultRadvizConfig)
+  const [dataset, setDataset] = useState(defaultDataset)
+  const [loading, setLoading] = useState(false)
+
+  useEffect(() => {
+    fetchData(API_URL, mainConfig, setDataset, setLoading)
+  }, [mainConfig])
+
+  useEffect(() => {
+    updateRadviz(radvizConfig, dataset)
+  }, [radvizConfig, dataset])
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <FormWrapper
+      loading={loading}
+      mainConfig={mainConfig}
+      setMainConfig={setMainConfig}
+      radvizConfig={radvizConfig}
+      setRadvizConfig={setRadvizConfig}
+    />
   );
 }
 
