@@ -1,10 +1,11 @@
-from flask import Flask, request
-from flask import jsonify
+from flask import Flask, request, jsonify, make_response
+from flask_cors import CORS
 import json
 from sklearn import datasets
 from sklearn.cluster import KMeans
 from sklearn.cluster import DBSCAN
 app = Flask(__name__)
+cors = CORS(app)
 
 '''
     request format : {'dataset': 'iris/winequality', 'clusteringAlgorithm': 'K-Means'/'DBScan', 'clusterSize': number}
@@ -48,72 +49,40 @@ def DBScane(dataset, n_cluster):
     return labels.tolist()
 
 
-# def makeoutput():
-#     data = {'data': [{'sepalLength': "",
-#                       'sepalWidth': val2,
-#                       'petaLength': val3,
-#                       'petaWidth': val4,
-#                       'species': name,
-#                       'someClusterLabel': 0},
-#                       'dimensions':['sepalLength', "sepalWidth", "petaLength", "petaWidth", "species"],
-#                       'classLabel': "",
-#                       'clusterlabels": "someClusterLabel"}]
-#     return
-''' main route'''
-
-@app.route('/api', methods=['GET', 'POST'])
-def testget():
-  return jsonify({"hey": "you"})
-
 @app.route('/', methods=['POST'])
 def get():
-    req = request.args
-    temp_dataset = req['dataset']
-    temp_alg = req['clusteringAlgorithm']
-    temp_cluster = req['clusterSize']
+    dataset = request.json['dataset']
+    clusteringAlgorithm = request.json['clusteringAlgorithm']
+    clusterSize = request.json['clusterSize']
 
-    if temp_dataset == "iris":
+    if dataset == "iris":
         dataset = get_iris()
-    elif temp_dataset == 'clusteringAlgorithm':
+    elif dataset == 'winequality':
         dataset = get_wine()
     else:
         return jsonify(data=[],
                        classes=[],
                        classNames=[],
-                       clasters=[],
-                       dimensions=['sepalLength', "sepalWidth", "petaLength", "petaWidth"])
+                       clusters=[],
+                       dimensions=[])
 
-    if temp_alg == 'K-Means':
-        labels = k_means(dataset['data'], int(temp_cluster))
-    elif temp_alg == 'DBScan':
-        labels = DBScane(dataset['data'], int(temp_cluster))
+    if clusteringAlgorithm == 'K-Means':
+        labels = k_means(dataset['data'], int(clusterSize))
+    elif clusteringAlgorithm == 'DBScan':
+        labels = DBScane(dataset['data'], int(clusterSize))
     else:
         return jsonify(data=dataset['data'].tolist(),
                        classes=dataset['target'].tolist(),
                        classNames=dataset['target_names'].tolist(),
-                       clasters=[],
+                       clusters=[],
                        dimensions=['sepalLength', "sepalWidth", "petaLength", "petaWidth"])
-
-    # data = []
-    # for i in range(len(dataset['data'].tolist())):
-    #     data.append({'sepalLength': str(dataset['data'][i][0]),
-    #              'sepalWidth': str(dataset['data'][i][1]),
-    #              'petaLength': str(dataset['data'][i][2]),
-    #              'petaWidth': str(dataset['data'][i][3]),
-    #              'species': dataset['target_names'][dataset['target'][i]],
-    #              'someClusterLabel': labels[i]})
-    #
-    # respons = {'data': data,
-    #            'dimensions': ['sepalLength', "sepalWidth", "petaLength", "petaWidth"],
-    #            'classLabel': "species",
-    #            'clusterlabels': "someClusterLabel"}
 
     return jsonify(data=dataset['data'].tolist(),
                    classes=dataset['target'].tolist(),
                    classNames=dataset['target_names'].tolist(),
-                   clasters=labels,
+                   clusters=labels,
                    dimensions=['sepalLength', "sepalWidth", "petaLength", "petaWidth"])
-    # return json.dumps(respons)
+
 
 
 if __name__ == "__main__":
