@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify, make_response
+from flask import Flask, request, jsonify
 from flask_cors import CORS
 import json
 from sklearn import datasets
@@ -32,6 +32,16 @@ def get_iris():
 def get_wine():
     return datasets.load_wine()
 
+def get_none():
+    return {
+        "data": [],
+        "target": [],
+        "target_names": [],
+        "clusters": [],
+        "dimensions": [],
+        "feature_names": []
+    }
+
 
 # clustering
 
@@ -42,48 +52,48 @@ def k_means(dataset, n_cluster):
     return labels.tolist()
 
 
-def DBScane(dataset, n_cluster):
+def DBScan(dataset, n_cluster):
     model = DBSCAN(n_cluster)
     model.fit(dataset)
     labels = model.labels_
     return labels.tolist()
 
 
+getDataset = {
+    "iris": get_iris,
+    "winequality": get_wine,
+    "None": get_none
+}
+
+getClusteringAlgorithm = {
+    "K-Means": k_means,
+    "DBScan": DBScan,
+    "None": lambda dataset, clusterSize: []
+}
+
+def make_response(dataset, clusters):
+    response = {
+        "data": get_values_safe(dataset, 'data'),
+        "classes": get_values_safe(dataset, 'target'), 
+        "classNames": get_values_safe(dataset, 'target_names'),
+        "clusters": clusters,
+        "dimensions": dataset["feature_names"]
+    }
+
+    return jsonify(response)
+
+def get_values_safe(dic, key):
+    return dic[key].tolist() if dic[key] != [] else []
+
 @app.route('/', methods=['POST'])
 def get():
-    dataset = request.json['dataset']
-    clusteringAlgorithm = request.json['clusteringAlgorithm']
+    datasetName = request.json['dataset']
+    clusteringAlgorithmName = request.json['clusteringAlgorithm']
     clusterSize = request.json['clusterSize']
 
-    if dataset == "iris":
-        dataset = get_iris()
-    elif dataset == 'winequality':
-        dataset = get_wine()
-    else:
-        return jsonify(data=[],
-                       classes=[],
-                       classNames=[],
-                       clusters=[],
-                       dimensions=[])
-
-    if clusteringAlgorithm == 'K-Means':
-        labels = k_means(dataset['data'], int(clusterSize))
-    elif clusteringAlgorithm == 'DBScan':
-        labels = DBScane(dataset['data'], int(clusterSize))
-    else:
-        return jsonify(data=dataset['data'].tolist(),
-                       classes=dataset['target'].tolist(),
-                       classNames=dataset['target_names'].tolist(),
-                       clusters=[],
-                       dimensions=['sepalLength', "sepalWidth", "petaLength", "petaWidth"])
-
-    return jsonify(data=dataset['data'].tolist(),
-                   classes=dataset['target'].tolist(),
-                   classNames=dataset['target_names'].tolist(),
-                   clusters=labels,
-                   dimensions=['sepalLength', "sepalWidth", "petaLength", "petaWidth"])
-
-
+    dataset = getDataset[datasetName]()
+    clusters = getClusteringAlgorithm[clusteringAlgorithmName](dataset['data'], int(clusterSize))
+    return make_response(dataset, clusters)
 
 if __name__ == "__main__":
     app.run(host='127.0.0.1', port=81)
