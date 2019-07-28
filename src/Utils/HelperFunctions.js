@@ -1,3 +1,5 @@
+// function used in forms of OnChange Event handling
+// set data to state on change
 export const _handleChange = ({name, value, checked}, previousState, setState = null) => {
   value = value || checked
   let newState = {
@@ -7,6 +9,7 @@ export const _handleChange = ({name, value, checked}, previousState, setState = 
   setState(newState)
 }
 
+// transform Response To Needed Data function
 export const transformResponseToNeededData = (response) => {
   const result = {
     data: [],

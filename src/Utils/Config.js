@@ -1,3 +1,4 @@
+// function to generate config for radviz diagram
 const getConfig = ({
   useRepulsion, drawLinks, dotSize, width,
   selector, dimensions, colorAccessor
@@ -24,6 +25,7 @@ const getConfig = ({
   }
 }
 
+// tooltip html
 const tooltip = (data, dimensions, colorAccessor) => `
   <div class="ui bottom left popup transition visible" style="right: auto; position: absolute; will-change: transform; top: 0px; left: 0px;">
     <h1 class="ui header">${data[colorAccessor]}</h1>

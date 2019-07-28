@@ -8,6 +8,7 @@ const emptyRadvizContainer = () => {
   }
 }
 
+// refreshing radviz diagram by new data and config
 const updateRadviz = (config, dataset) => {
   const {data, dimensions, classLabel, clusterLabel} = dataset
   const {isClusterColorset, ...restConfig} = config
