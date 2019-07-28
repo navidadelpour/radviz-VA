@@ -1,3 +1,71 @@
+## Dependencies
+
+dependencies and third-party libraries used in this project:
+
+* nodejs
+* npm
+* flask
+* flask-cors
+* sklearn
+
+if you dont installed these dependencies in your system then you should install them first.
+
+## Setup
+
+running the project
+
+
+1.  installing node modules:
+    
+
+    open a terminal in project folder
+    
+    run this command:
+    
+    `npm install`
+    
+    this would install all node modules required in application
+
+
+2.  run flask server:
+
+    open a terminal in project folder
+    
+    head over to /server folder:
+    
+    `cd server`
+    
+    set the debug mode to on:
+    
+    `export FLASK_DEBUG=1`
+    
+    now you can run your flask server (by default it would run on port 5000):
+    
+    `flask run`
+    
+    now your server is on http://localhost:5000
+
+
+3.  setup react-app
+
+    open a terminal in project folder
+    
+    `cd ..`
+    
+    now you are on the project folder
+    
+    run this command to setup your react-app (by default it would run on port 3000)
+    
+    `npm start`
+    
+    now you can see application on http://localhost:3000
+    
+## notes
+
+I used https://github.com/biovisualize/radviz as a refrence for radviz.js and d3.js 
+
+## create-react-app README.md
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
