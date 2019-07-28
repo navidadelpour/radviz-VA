@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 import json
+import pandas
 from sklearn import datasets
 from sklearn.cluster import KMeans
 from sklearn.cluster import DBSCAN
@@ -58,6 +59,19 @@ def DBScan(dataset, n_cluster):
     labels = model.labels_
     return labels.tolist()
 
+def calculate_correlation_matrix(dataset):
+    df = pandas.DataFrame(
+        data = dataset['data'],
+        columns = dataset['feature_names']
+    )
+
+    df = df.corr()
+    shape = df.shape
+    result = []
+    for c in range(shape[1]):
+        result.append(df[dataset['feature_names'][c]].tolist())
+
+    return result
 
 getDataset = {
     "iris": get_iris,
@@ -71,13 +85,14 @@ getClusteringAlgorithm = {
     "None": lambda dataset, clusterSize: []
 }
 
-def make_response(dataset, clusters):
+def make_response(dataset, clusters, correlation_matrix):
     response = {
         "data": get_values_safe(dataset, 'data'),
         "classes": get_values_safe(dataset, 'target'), 
         "classNames": get_values_safe(dataset, 'target_names'),
+        "dimensions": dataset["feature_names"],
         "clusters": clusters,
-        "dimensions": dataset["feature_names"]
+        "correlation_matrix": correlation_matrix
     }
 
     return jsonify(response)
@@ -93,7 +108,9 @@ def get():
 
     dataset = getDataset[datasetName]()
     clusters = getClusteringAlgorithm[clusteringAlgorithmName](dataset['data'], int(clusterSize))
-    return make_response(dataset, clusters)
+    correlation_matrix = calculate_correlation_matrix(dataset)
+
+    return make_response(dataset, clusters, correlation_matrix)
 
 if __name__ == "__main__":
     app.run(host='127.0.0.1', port=81)
