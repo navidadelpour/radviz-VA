@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import updateRadviz from './Utils/updateRadviz'
 import fetchData from './Utils/fetchData'
 import FormWrapper from './Components/Forms/FormWrapper'
+import correlationMatrix from './Utils/correlationMatrix'
 
 const API_URL = 'http://localhost:5000/'
 
@@ -15,7 +16,8 @@ const defaultDataset = {
   data: [],
   dimensions: [],
   classLabel: "",
-  clusterLabel: ""
+  clusterLabel: "",
+  correlationMatrix: []
 }
 
 const defaultRadvizConfig = {
@@ -39,6 +41,10 @@ const App = () => {
   useEffect(() => {
     updateRadviz(radvizConfig, dataset)
   }, [radvizConfig, dataset])
+
+  useEffect(() => {
+    correlationMatrix(dataset.correlationMatrix, dataset.dimensions)
+  }, [dataset]) 
 
   return (
     <FormWrapper
