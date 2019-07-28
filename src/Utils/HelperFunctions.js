@@ -18,6 +18,7 @@ export const transformResponseToNeededData = (response) => {
   result.dimensions   = response["dimensions"]
   result.classLabel   = "class"
   result.clusterLabel = "cluster" 
+  result.correlationMatrix = response["correlation_matrix"]
 
   response["data"].forEach((values, sampleIndex) => {
     let sample = {}
