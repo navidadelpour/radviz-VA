@@ -40,6 +40,18 @@ body {
     display: flex;
     justify-content: center;
   } 
-  .ui.form .field .ui.input input, .ui.form .fields .field .ui.input input {
+
+.ui.form .field .ui.input input, .ui.form .fields .field .ui.input input {
     width: 90%;
-  }
+}
+
+.table {
+    margin-left: 30px !important;
+    margin-right: 30px !important;
+    overflow: scroll !important;
+    font-size: .9rem !important;
+}
+
+#correlation-matrix-container {
+    overflow: scroll;
+}
