@@ -7,6 +7,7 @@ dependencies and third-party libraries used in this project:
 * flask
 * flask-cors
 * sklearn
+* pandas
 
 if you dont installed these dependencies in your system then you should install them first.
 
