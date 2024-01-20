@@ -1,137 +1,74 @@
+# Radviz Visualization
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/navidadelpour/radviz-VA/master/screenshots/screenshot-1.png" />
+</p>
+
+This project utilizes [Create React App](https://github.com/facebook/create-react-app) for the frontend and Flask for the backend.
+
 ## Dependencies
 
-dependencies and third-party libraries used in this project:
+Ensure the following dependencies and third-party libraries are installed on your system before running the project:
 
-* nodejs
-* npm
-* flask
-* flask-cors
-* sklearn
-* pandas
-
-if you dont installed these dependencies in your system then you should install them first.
+- Node.js
+- npm
+- Flask
+- flask-cors
+- scikit-learn (sklearn)
+- pandas
 
 ## Setup
 
-running the project
+Follow these steps to set up and run the project:
 
+1. **Installing Node Modules:**
 
-1.  installing node modules:
-    
+   Open a terminal in the project folder and run the following command:
 
-    open a terminal in project folder
-    
-    run this command:
-    
-    `npm install`
-    
-    this would install all node modules required in application
+   ```bash
+   npm install
+   ```
 
+   This will install all the required Node modules for the application.
 
-2.  run flask server:
+2. **Run Flask Server:**
 
-    open a terminal in project folder
-    
-    head over to /server folder:
-    
-    `cd server`
-    
-    set the debug mode to on:
-    
-    `export FLASK_DEBUG=1`
-    
-    now you can run your flask server (by default it would run on port 5000):
-    
-    `flask run`
-    
-    now your server is on http://localhost:5000
+   Open a terminal in the project folder and navigate to the `/server` folder:
 
+   ```bash
+   cd server
+   ```
 
-3.  setup react-app
+   Set the debug mode to on:
 
-    open a terminal in project folder
-    
-    `cd ..`
-    
-    now you are on the project folder
-    
-    run this command to setup your react-app (by default it would run on port 3000)
-    
-    `npm start`
-    
-    now you can see application on http://localhost:3000
-    
-## notes
+   ```bash
+   export FLASK_DEBUG=1
+   ```
 
-I used https://github.com/biovisualize/radviz as a refrence for radviz.js and d3.js 
+   Now, run the Flask server (by default, it will run on port 5000):
 
-## create-react-app README.md
+   ```bash
+   flask run
+   ```
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+   The server is now accessible at [http://localhost:5000](http://localhost:5000).
 
-## Available Scripts
+3. **Setup React App:**
 
-In the project directory, you can run:
+   Open a terminal in the project folder:
 
-### `npm start`
+   ```bash
+   cd ..
+   ```
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+   Now, you are back in the project folder. Run the following command to set up your React app (by default, it will run on port 3000):
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+   ```bash
+   npm start
+   ```
 
-### `npm test`
+   Open [http://localhost:3000](http://localhost:3000) to view the app in the browser.
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Notes
 
-### `npm run build`
-
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+I used [biovisualize/radviz](https://github.com/biovisualize/radviz) as a reference for radviz.js and d3.js.
